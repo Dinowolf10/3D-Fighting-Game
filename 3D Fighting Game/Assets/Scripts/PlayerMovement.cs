@@ -8,9 +8,15 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform playerTransform;
 
+    public Transform cameraTransform;
+
     public float speed;
 
     public float jumpForce;
+
+    public float smoothTurnTime;
+
+    public float smoothTurnVelocity;
 
     public bool isWalking = false;
 
@@ -55,11 +61,23 @@ public class PlayerMovement : MonoBehaviour
         // Gets input from the vertical axis
         float vertical = Input.GetAxisRaw("Vertical");
 
-        // If there is input on both the horizontal and vertical axis, half the player speed
-        if (horizontal != 0 && vertical != 0)
+        if (horizontal != 0 || vertical != 0)
         {
-            // Move player based on input and speed
-            playerTransform.Translate(new Vector3(horizontal / 2, 0, vertical / 2) * speed * Time.fixedDeltaTime);
+            // Creates direction vector using player input
+            Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
+
+            // Calculates the angle the player should rotate to
+            float angle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+
+            // Uses the SmoothDampAngle method to calculate a new angle based on the target angle 
+            // and the time it takes for the player to look at that angle
+            float smoothAngle = Mathf.SmoothDampAngle(playerTransform.eulerAngles.y, angle, ref smoothTurnVelocity, smoothTurnTime);
+
+            // Sets the player's rotation
+            playerTransform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
+
+            // Moves the player forward
+            playerTransform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
 
             // Set is walking to true
             isWalking = true;
@@ -68,23 +86,13 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.SetBool("isWalking", true);
         }
         // If the player is not moving
-        else if (horizontal == 0 && vertical == 0)
-        {
-            // Set is walking to true
-            isWalking = false;
-
-            // Set is walking to true in the player animator controller
-            playerAnimator.SetBool("isWalking", false);
-        }
-        // Otherwise move the player normally
         else
         {
-            // Move player based on input and speed
-            playerTransform.Translate(new Vector3(horizontal, 0, vertical) * speed * Time.deltaTime);
+            // Set is walking to false
+            isWalking = false;
 
-            isWalking = true;
-
-            playerAnimator.SetBool("isWalking", true);
+            // Set is walking to false in the player animator controller
+            playerAnimator.SetBool("isWalking", false);
         }
     }
 
