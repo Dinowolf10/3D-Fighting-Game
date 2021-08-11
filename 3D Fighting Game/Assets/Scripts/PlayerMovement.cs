@@ -61,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
         // Gets input from the vertical axis
         float vertical = Input.GetAxisRaw("Vertical");
 
+        // If the player is moving
         if (horizontal != 0 || vertical != 0)
         {
             // Creates direction vector using player input
