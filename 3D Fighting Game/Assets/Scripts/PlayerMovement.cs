@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform cameraTransform;
 
+    public SphereCollider groundChecker;
+
     public float speed;
 
     public float jumpForce;
@@ -22,7 +24,11 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isJumping = false;
 
+    public bool isGrounded = true;
+
     public Animator playerAnimator;
+
+    public PlayerAttack playerAttack;
 
     // Start is called before the first frame update
     private void Start()
@@ -34,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // If the player presses jump and the player is currently not jumping
-        if (Input.GetButtonDown("Jump") && !isJumping)
+        if (Input.GetButtonDown("Jump") && !isJumping && isGrounded && !playerAttack.isPunching)
         {
             // Call the jump method
             Jump();
@@ -62,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
 
         // If the player is moving
-        if (horizontal != 0 || vertical != 0)
+        if ((horizontal != 0 || vertical != 0) && !playerAttack.isPunching)
         {
             // Creates direction vector using player input
             Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
@@ -107,6 +113,11 @@ public class PlayerMovement : MonoBehaviour
 
         // Set isJumping to true
         isJumping = true;
+
+        isGrounded = false;
+
+        // Set is jumping to true in the player animator controller
+        playerAnimator.SetBool("isJumping", true);
     }
 
     /// <summary>
@@ -115,13 +126,27 @@ public class PlayerMovement : MonoBehaviour
     private void CheckMovement()
     {
         // Checks to see if the player is jumping
-        if (rb.velocity.y != 0)
+        if (!isGrounded)
         {
             isJumping = true;
+
+            // Set is jumping to true in the player animator controller
+            playerAnimator.SetBool("isJumping", true);
         }
         else
         {
             isJumping = false;
+
+            // Set is jumping to false in the player animator controller
+            playerAnimator.SetBool("isJumping", false);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Ground")
+        {
+            isGrounded = true;
         }
     }
 }
