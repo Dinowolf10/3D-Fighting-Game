@@ -64,10 +64,13 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // If the object colliding is an enemy
+        // If the object colliding is an enemy, damage the enemy
         if (other.tag == "Enemy")
         {
             Debug.Log("Hit Enemy with punch");
+
+            // Start the enemy damage coroutine
+            StartCoroutine(other.GetComponent<EnemyAttack>().TakeDamage(1));
         }
     }
 }

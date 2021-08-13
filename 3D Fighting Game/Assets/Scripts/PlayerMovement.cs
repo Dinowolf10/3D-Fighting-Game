@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         // Gets input from the vertical axis
         float vertical = Input.GetAxisRaw("Vertical");
 
-        // If the player is moving
+        // If the player is moving and not punching
         if ((horizontal != 0 || vertical != 0) && !playerAttack.isPunching)
         {
             // Creates direction vector using player input
@@ -114,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
         // Set isJumping to true
         isJumping = true;
 
+        // Set isGrounded to false
         isGrounded = false;
 
         // Set is jumping to true in the player animator controller
@@ -128,6 +129,7 @@ public class PlayerMovement : MonoBehaviour
         // Checks to see if the player is jumping
         if (!isGrounded)
         {
+            // Set isJumping to true
             isJumping = true;
 
             // Set is jumping to true in the player animator controller
@@ -135,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            // Set isJumping to false
             isJumping = false;
 
             // Set is jumping to false in the player animator controller
@@ -144,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // If the player is touching the ground set isGrounded to true
         if (other.tag == "Ground")
         {
             isGrounded = true;
