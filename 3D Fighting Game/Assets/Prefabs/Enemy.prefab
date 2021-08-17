@@ -1068,6 +1068,7 @@ GameObject:
   - component: {fileID: 3638875333262470272}
   - component: {fileID: 5915730137184201900}
   - component: {fileID: 5973002242483133701}
+  - component: {fileID: 5268213541774294168}
   - component: {fileID: 4356639271596451323}
   - component: {fileID: -3617346201281957907}
   - component: {fileID: -3114280997150291765}
@@ -1124,6 +1125,19 @@ CapsuleCollider:
   m_Height: 1.9547133
   m_Direction: 1
   m_Center: {x: 0, y: 0.9372176, z: 0}
+--- !u!65 &5268213541774294168
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4121973961686398522}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.423203, y: 0.5329609, z: 3.7927744}
+  m_Center: {x: 0, y: 1.5403547, z: 1.8913518}
 --- !u!95 &4356639271596451323
 Animator:
   serializedVersion: 3
@@ -1157,7 +1171,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 5915730137184201900}
   enemyTransform: {fileID: 3638875333262470272}
+  enemyAnimator: {fileID: 4356639271596451323}
+  speed: 2
+  maxViewDistance: 350
   isEnemySpotted: 0
+  smoothTurnTime: 0.1
+  smoothTurnVelocity: 0
+  player: {fileID: 0}
 --- !u!114 &-3114280997150291765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1170,7 +1190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63e138831adeee4d8e8fbf0c45d235f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 3
   enemyAnimator: {fileID: 4356639271596451323}
   enemyMovement: {fileID: -3617346201281957907}
 --- !u!1 &4246991445142787425

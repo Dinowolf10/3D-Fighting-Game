@@ -65,7 +65,7 @@ public class PlayerAttack : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // If the object colliding is an enemy, damage the enemy
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy" && isPunching)
         {
             Debug.Log("Hit Enemy with punch");
 
