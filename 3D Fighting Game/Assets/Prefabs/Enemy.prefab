@@ -1172,7 +1172,7 @@ MonoBehaviour:
   rb: {fileID: 5915730137184201900}
   enemyTransform: {fileID: 3638875333262470272}
   enemyAnimator: {fileID: 4356639271596451323}
-  speed: 2
+  speed: 1
   maxViewDistance: 350
   isEnemySpotted: 0
   smoothTurnTime: 0.1

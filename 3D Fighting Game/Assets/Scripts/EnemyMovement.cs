@@ -68,37 +68,29 @@ public class EnemyMovement : MonoBehaviour
 
     private void FollowPlayer()
     {
-        /*RaycastHit hit;
+        Vector3 directionToPlayer = (player.transform.position - enemyTransform.position).normalized;
 
-        if (Physics.Raycast(enemyTransform.position, player.transform.position, out hit, maxViewDistance))
+        Vector3 enemyHeightOffset = new Vector3(enemyTransform.position.x, enemyTransform.position.y + 1, enemyTransform.position.z);
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(enemyHeightOffset, directionToPlayer, out hit, maxViewDistance))
         {
-            if (hit.transform.position == player.transform.position)
+            if (hit.collider != null)
             {
-                Vector3 moveDirection = new Vector3(player.transform.position.x, 0f, player.transform.position.z).normalized;
+                Debug.DrawLine(enemyHeightOffset, hit.point, Color.green);
 
-                float angle = Mathf.Atan2(moveDirection.x, moveDirection.z);
+                Debug.Log(hit.collider.gameObject.name);
 
-                float smoothAngle = Mathf.SmoothDampAngle(enemyTransform.eulerAngles.y, angle, ref smoothTurnVelocity, smoothTurnTime);
+                if (hit.collider.gameObject.tag == "Player")
+                {
+                    Debug.Log("Can see player!");
 
-                enemyTransform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
+                    enemyTransform.LookAt(new Vector3(player.transform.position.x, 0, player.transform.position.z), Vector3.up);
 
-                enemyTransform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
+                    enemyTransform.Translate(Vector3.forward * speed * Time.deltaTime);
+                }
             }
-        }*/
-
-        /*Vector3 moveDirection = player.transform.position - enemyTransform.position;
-
-        float angle = Mathf.Atan2(moveDirection.z, moveDirection.x) * Mathf.Rad2Deg;
-
-        float smoothAngle = Mathf.SmoothDampAngle(enemyTransform.eulerAngles.y, angle, ref smoothTurnVelocity, smoothTurnTime);
-
-        enemyTransform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
-
-        enemyTransform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
-        */
-
-        enemyTransform.LookAt(player.transform.position);
-
-        enemyTransform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
     }
 }
