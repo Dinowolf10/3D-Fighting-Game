@@ -69,8 +69,16 @@ public class PlayerAttack : MonoBehaviour
         {
             Debug.Log("Hit Enemy with punch");
 
-            // Start the enemy damage coroutine
-            StartCoroutine(other.GetComponent<EnemyAttack>().TakeDamage(1));
+            if (other.GetComponent<EnemyMovement>().isPlayerSpotted)
+            {
+                // Start the enemy damage coroutine
+                StartCoroutine(other.GetComponent<EnemyAttack>().TakeDamage(1));
+            }
+            else
+            {
+                // Start the enemy damage coroutine
+                StartCoroutine(other.GetComponent<EnemyAttack>().TakeDamage(3));
+            }
         }
     }
 }

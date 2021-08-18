@@ -40,18 +40,8 @@ public class EnemyAttack : MonoBehaviour
         // Set isTakingHit to true in animator
         enemyAnimator.SetBool("isTakingHit", true);
 
-        // If enemy is being stealth attacked, wait for 3.5 seconds
-        if (!enemyMovement.isEnemySpotted)
-        {
-            Debug.Log("Enemy has been stunned!");
-
-            // Wait for 3.5 seconds
-            yield return new WaitForSeconds(3.5f);
-
-            Debug.Log("Enemy is now dead!");
-        }
-        // If enemy is taking hit, wait for 1.6 seconds
-        else
+        // If enemy can see player, wait for 1.6 seconds
+        if (enemyMovement.isPlayerSpotted)
         {
             Debug.Log("Enemy is taking hit");
 
@@ -59,6 +49,16 @@ public class EnemyAttack : MonoBehaviour
             yield return new WaitForSeconds(1.6f);
 
             Debug.Log("Enemy has taken hit");
+        }
+        // If enemy doesn't see the player, they are being stealth attacked so wait for 3.5 seconds
+        else
+        {
+            Debug.Log("Enemy has been stunned!");
+
+            // Wait for 3.5 seconds
+            yield return new WaitForSeconds(3.5f);
+
+            Debug.Log("Enemy is now dead!");
         }
 
         // Set isTakingHit to false
@@ -68,11 +68,12 @@ public class EnemyAttack : MonoBehaviour
         enemyAnimator.SetBool("isTakingHit", false);
 
         // Check if enemy is dead
-        if (health <= 0 || !enemyMovement.isEnemySpotted)
+        if (health <= 0)
         {
             Debug.Log("Enemy is dead");
 
-            Destroy(this.gameObject);
+            // Deactivates enemy if they drop to or below 0 health
+            this.gameObject.SetActive(false);
         }
     }
 }

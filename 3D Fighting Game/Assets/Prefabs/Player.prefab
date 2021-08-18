@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2049167391}
   m_Layer: 0
   m_Name: PunchHitbox
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 211343397250727017}
   m_Layer: 0
   m_Name: GroundChecker
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1209,7 +1209,7 @@ GameObject:
   - component: {fileID: 7598565549369370812}
   m_Layer: 0
   m_Name: ely_vanguardsoldier_kerwinatienza_Mesh
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2185,7 +2185,7 @@ GameObject:
   - component: {fileID: 4038779914846517671}
   m_Layer: 0
   m_Name: mixamorig:Hips
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

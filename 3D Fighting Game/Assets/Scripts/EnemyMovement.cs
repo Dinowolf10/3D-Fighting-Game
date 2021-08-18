@@ -14,7 +14,9 @@ public class EnemyMovement : MonoBehaviour
 
     public float maxViewDistance;
 
-    public bool isEnemySpotted = false;
+    public bool isPlayerInRange = false;
+
+    public bool isPlayerSpotted = false;
 
     public float smoothTurnTime;
 
@@ -36,7 +38,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isEnemySpotted)
+        if (isPlayerInRange)
         {
             FollowPlayer();
         }
@@ -46,11 +48,9 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            isEnemySpotted = true;
+            isPlayerInRange = true;
 
-            enemyAnimator.SetBool("isEnemySpotted", true);
-
-            Debug.Log("Player spotted!");
+            Debug.Log("Player in range!");
         }
     }
 
@@ -58,11 +58,9 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            isEnemySpotted = false;
+            isPlayerInRange = false;
 
-            enemyAnimator.SetBool("isEnemySpotted", false);
-
-            Debug.Log("Player lost!");
+            Debug.Log("Player out of range!");
         }
     }
 
@@ -84,11 +82,23 @@ public class EnemyMovement : MonoBehaviour
 
                 if (hit.collider.gameObject.tag == "Player")
                 {
+                    isPlayerSpotted = true;
+
+                    enemyAnimator.SetBool("isPlayerSpotted", true);
+
                     Debug.Log("Can see player!");
 
                     enemyTransform.LookAt(new Vector3(player.transform.position.x, 0, player.transform.position.z), Vector3.up);
 
                     enemyTransform.Translate(Vector3.forward * speed * Time.deltaTime);
+                }
+                else
+                {
+                    isPlayerSpotted = false;
+
+                    enemyAnimator.SetBool("isPlayerSpotted", false);
+
+                    Debug.Log("Can't see player!");
                 }
             }
         }
