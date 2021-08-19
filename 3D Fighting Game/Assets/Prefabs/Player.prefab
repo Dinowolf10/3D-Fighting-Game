@@ -2343,10 +2343,12 @@ MonoBehaviour:
   groundChecker: {fileID: 211343397250727017}
   speed: 4
   jumpForce: 4
+  slideForce: 10
   smoothTurnTime: 0.1
   smoothTurnVelocity: 0
   isWalking: 0
   isJumping: 0
+  isSliding: 0
   isGrounded: 1
   playerAnimator: {fileID: 8004330025438287682}
   playerAttack: {fileID: 2385138866651275343}

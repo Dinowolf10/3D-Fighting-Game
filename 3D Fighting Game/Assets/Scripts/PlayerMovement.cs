@@ -12,9 +12,17 @@ public class PlayerMovement : MonoBehaviour
 
     public SphereCollider groundChecker;
 
+    private Vector3 moveDirection;
+
+    private float horizontal;
+
+    private float vertical;
+
     public float speed;
 
     public float jumpForce;
+
+    public float slideForce;
 
     public float smoothTurnTime;
 
@@ -23,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isWalking = false;
 
     public bool isJumping = false;
+
+    public bool isSliding = false;
 
     public bool isGrounded = true;
 
@@ -39,11 +49,18 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        // Gets and stores player input on horizontal and vertical axis
+        GetMovementInput();
+
         // If the player presses jump and the player is currently not jumping
         if (Input.GetButtonDown("Jump") && !isJumping && isGrounded && !playerAttack.isPunching)
         {
             // Call the jump method
             Jump();
+        }
+        else if (Input.GetButtonDown("Slide") && !isJumping && !isSliding && isGrounded && !playerAttack.isPunching)
+        {
+            StartCoroutine(Slide());
         }
 
         // Checks and updates the current actions the player is performing
@@ -57,21 +74,27 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
+    /// Stores player input on horizontal and vertical axis
+    /// </summary>
+    private void GetMovementInput()
+    {
+        // Gets input from the horizontal axis
+        horizontal = Input.GetAxisRaw("Horizontal");
+
+        // Gets input from the vertical axis
+        vertical = Input.GetAxisRaw("Vertical");
+    }
+
+    /// <summary>
     /// Moves the player based on user input
     /// </summary>
     private void Move()
     {
-        // Gets input from the horizontal axis
-        float horizontal = Input.GetAxisRaw("Horizontal");
-
-        // Gets input from the vertical axis
-        float vertical = Input.GetAxisRaw("Vertical");
-
         // If the player is moving and not punching
-        if ((horizontal != 0 || vertical != 0) && !playerAttack.isPunching)
+        if ((horizontal != 0 || vertical != 0) && !playerAttack.isPunching && !isSliding)
         {
             // Creates direction vector using player input
-            Vector3 moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
+            moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
 
             // Calculates the angle the player should rotate to
             float angle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
@@ -108,6 +131,18 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void Jump()
     {
+        // If player is sliding, stop sliding
+        StopCoroutine(Slide());
+
+        // Set isSliding to false
+        isSliding = false;
+
+        // Set isSliding to false in the animator
+        playerAnimator.SetBool("isSliding", false);
+
+        // Reset the rigidbody velocity to 0
+        rb.velocity = new Vector3(0, 0, 0);
+
         // Adds force to player on the Y axis
         rb.AddForce(0f, jumpForce, 0f, ForceMode.Impulse);
 
@@ -119,6 +154,37 @@ public class PlayerMovement : MonoBehaviour
 
         // Set is jumping to true in the player animator controller
         playerAnimator.SetBool("isJumping", true);
+    }
+
+    /// <summary>
+    /// Adds force to player in the forward direction to simulate sliding
+    /// </summary>
+    private IEnumerator Slide()
+    {
+        // Adds force in the forward direction
+        rb.AddForce(playerTransform.forward * slideForce, ForceMode.Impulse);
+
+        // Set isSliding to true
+        isSliding = true;
+
+        // Set isSliding to ture in the animator
+        playerAnimator.SetBool("isSliding", true);
+
+        // Wait for 1.38 seconds
+        yield return new WaitForSeconds(1.38f);
+
+        // If the player has input in the horizontal and/or vertical axis
+        if ((horizontal != 0 || vertical != 0))
+        {
+            // Set is walking to true in the player animator controller
+            playerAnimator.SetBool("isWalking", true);
+        }
+
+        // Set isSliding to false
+        isSliding = false;
+
+        // Set isSliding to false in the animator
+        playerAnimator.SetBool("isSliding", false);
     }
 
     /// <summary>
