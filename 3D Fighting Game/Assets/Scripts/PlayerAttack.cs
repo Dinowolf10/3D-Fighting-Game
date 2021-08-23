@@ -18,6 +18,8 @@ public class PlayerAttack : MonoBehaviour
 
     public GameObject sword;
 
+    public GameObject restingSword;
+
     public bool isSwordActive = false;
 
     public bool isSwitchingSword = false;
@@ -128,6 +130,10 @@ public class PlayerAttack : MonoBehaviour
         isSwordActive = true;
 
         isSwitchingSword = false;
+
+        sword.SetActive(true);
+
+        restingSword.SetActive(false);
     }
 
     private IEnumerator PutSwordAway()
@@ -139,6 +145,10 @@ public class PlayerAttack : MonoBehaviour
         isSwordActive = false;
 
         isSwitchingSword = false;
+
+        sword.SetActive(false);
+
+        restingSword.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
