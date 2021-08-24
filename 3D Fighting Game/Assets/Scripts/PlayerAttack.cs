@@ -66,6 +66,8 @@ public class PlayerAttack : MonoBehaviour
 
             // Set isSwitchingSword to true
             isSwitchingSword = true;
+
+            playerAnimator.SetBool("isSwitchingSword", true);
         }
     }
 
@@ -125,13 +127,17 @@ public class PlayerAttack : MonoBehaviour
     {
         Debug.Log("Arming sword");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         isSwordActive = true;
 
         isSwitchingSword = false;
 
+        playerAnimator.SetBool("isSwitchingSword", false);
+
         sword.SetActive(true);
+
+        playerAnimator.SetBool("isSwordActive", true);
 
         restingSword.SetActive(false);
     }
@@ -140,13 +146,17 @@ public class PlayerAttack : MonoBehaviour
     {
         Debug.Log("Putting sword away");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.25f);
 
         isSwordActive = false;
 
         isSwitchingSword = false;
 
+        playerAnimator.SetBool("isSwitchingSword", false);
+
         sword.SetActive(false);
+
+        playerAnimator.SetBool("isSwordActive", false);
 
         restingSword.SetActive(true);
     }

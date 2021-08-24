@@ -53,12 +53,12 @@ public class PlayerMovement : MonoBehaviour
         GetMovementInput();
 
         // If the player presses jump and the player is currently not jumping
-        if (Input.GetButtonDown("Jump") && !isJumping && isGrounded && !playerAttack.isPunching)
+        if (Input.GetButtonDown("Jump") && !isJumping && isGrounded && !playerAttack.isPunching && !playerAttack.isSwingingSword && !playerAttack.isSwitchingSword)
         {
             // Call the jump method
             Jump();
         }
-        else if (Input.GetButtonDown("Slide") && !isJumping && !isSliding && isGrounded && !playerAttack.isPunching)
+        else if (Input.GetButtonDown("Slide") && !isJumping && !isSliding && isGrounded && !playerAttack.isPunching && !playerAttack.isSwingingSword && !playerAttack.isSwitchingSword)
         {
             StartCoroutine(Slide());
         }
@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         // If the player is moving and not punching
-        if ((horizontal != 0 || vertical != 0) && !playerAttack.isPunching && !isSliding)
+        if ((horizontal != 0 || vertical != 0) && !playerAttack.isPunching && !isSliding && !playerAttack.isSwingingSword && !playerAttack.isSwitchingSword)
         {
             // Creates direction vector using player input
             moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
