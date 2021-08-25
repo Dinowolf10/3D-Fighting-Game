@@ -63,11 +63,6 @@ public class PlayerAttack : MonoBehaviour
             {
                 StartCoroutine(PutSwordAway());
             }
-
-            // Set isSwitchingSword to true
-            isSwitchingSword = true;
-
-            playerAnimator.SetBool("isSwitchingSword", true);
         }
     }
 
@@ -114,11 +109,18 @@ public class PlayerAttack : MonoBehaviour
     {
         isSwingingSword = true;
 
+        playerAnimator.SetBool("isSwingingSword", true);
+
         Debug.Log("Swinging sword!");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.27f);
 
         isSwingingSword = false;
+
+        playerAnimator.SetBool("isSwingingSword", false);
+
+        // Sets hasHitSomething to false
+        hasHitSomething = false;
 
         Debug.Log("Done swinging sword!");
     }
@@ -126,6 +128,11 @@ public class PlayerAttack : MonoBehaviour
     private IEnumerator ArmSword()
     {
         Debug.Log("Arming sword");
+
+        // Set isSwitchingSword to true
+        isSwitchingSword = true;
+
+        playerAnimator.SetBool("isSwitchingSword", true);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -144,6 +151,11 @@ public class PlayerAttack : MonoBehaviour
 
     private IEnumerator PutSwordAway()
     {
+        // Set isSwitchingSword to true
+        isSwitchingSword = true;
+
+        playerAnimator.SetBool("isSwitchingSword", true);
+
         Debug.Log("Putting sword away");
 
         yield return new WaitForSeconds(0.25f);

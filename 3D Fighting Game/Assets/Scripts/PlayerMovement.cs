@@ -106,8 +106,16 @@ public class PlayerMovement : MonoBehaviour
             // Sets the player's rotation
             playerTransform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
 
-            // Moves the player forward
-            playerTransform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
+            if (playerAttack.isSwordActive)
+            {
+                // Moves the player forward
+                playerTransform.Translate(Vector3.forward * (speed / 2) * Time.fixedDeltaTime);
+            }
+            else
+            {
+                // Moves the player forward
+                playerTransform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
+            }
 
             // Set is walking to true
             isWalking = true;
