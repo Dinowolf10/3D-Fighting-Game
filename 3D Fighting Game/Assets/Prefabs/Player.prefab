@@ -2417,6 +2417,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 0}
   groundChecker: {fileID: 211343397250727017}
   speed: 4
+  sprintSpeed: 8
   jumpForce: 4
   slideForce: 10
   smoothTurnTime: 0.1
@@ -2425,6 +2426,7 @@ MonoBehaviour:
   isJumping: 0
   isSliding: 0
   isGrounded: 1
+  isSprinting: 0
   playerAnimator: {fileID: 8004330025438287682}
   playerAttack: {fileID: 2385138866651275343}
 --- !u!114 &2385138866651275343
