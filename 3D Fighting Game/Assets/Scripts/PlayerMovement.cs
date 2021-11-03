@@ -20,8 +20,6 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed;
 
-    public float sprintSpeed;
-
     public float jumpForce;
 
     public float slideForce;
@@ -37,8 +35,6 @@ public class PlayerMovement : MonoBehaviour
     public bool isSliding = false;
 
     public bool isGrounded = true;
-
-    public bool isSprinting = false;
 
     public Animator playerAnimator;
 
@@ -87,15 +83,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Gets input from the vertical axis
         vertical = Input.GetAxisRaw("Vertical");
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            isSprinting = true;
-        }
-        else
-        {
-            isSprinting = false;
-        }
     }
 
     /// <summary>
@@ -124,13 +111,6 @@ public class PlayerMovement : MonoBehaviour
                 // Moves the player forward
                 playerTransform.Translate(Vector3.forward * (speed / 2) * Time.fixedDeltaTime);
             }
-            // If the player is sprinting, use the sprint speed
-            else if (isSprinting)
-            {
-                // Moves the player forward
-                playerTransform.Translate(Vector3.forward * sprintSpeed * Time.fixedDeltaTime);
-            }
-            // Otherwise use speed
             else
             {
                 // Moves the player forward
